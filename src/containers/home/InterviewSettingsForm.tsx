@@ -1,6 +1,8 @@
 import { Button, Flex, Box } from "@chakra-ui/react";
 import React from "react";
 import FormSelect from "../../components/formComponents/FormSelect";
+import * as Yup from "yup";
+
 import { useFormik } from "formik";
 import { PageNumbers } from "../../interface/home";
 import { IInterViewSettings } from "../../interface/forms";
@@ -9,10 +11,14 @@ import {
   interviewLanguageOptions,
   interviewModeOptions,
 } from "./constants";
+import { useData } from "./DataProvider";
 
 const InterviewDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
+
+  const {state: {interviewSettings}} = useData();
+
   const {
     errors,
     touched,
@@ -26,6 +32,14 @@ const InterviewDetailsForm: React.FC<{
       interviewDuration: "",
       interviewLanguage: "",
     },
+    validationSchema: Yup.object().shape({
+      interviewMode: Yup.string().required("Interview  Mode is required"),
+      interviewDuration: Yup.string()
+        .required("Duration  is required"),
+      interviewLanguage: Yup.string().required("Language is required"),
+    }),
+    // SOLUTION: Before submitting the form, validation of interview input fields(interviewMode, interviewDuration, interviewLanguage) were missing
+    
     onSubmit: (values) => {
       console.log({ values });
       alert("Form successfully submitted");
@@ -66,7 +80,7 @@ const InterviewDetailsForm: React.FC<{
           onBlur={setFieldTouched}
           error={errors.interviewLanguage}
           touched={touched.interviewLanguage}
-          value={values.interviewLanguage}
+          value={values?.interviewLanguage}
         />
         <Flex w="100%" justify="flex-end" mt="4rem" gap="20px">
           <Button colorScheme="gray" type="button" onClick={() => handleTab(1)}>
