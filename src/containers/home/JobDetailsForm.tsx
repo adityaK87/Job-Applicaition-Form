@@ -30,6 +30,9 @@ const JobDetailsForm: React.FC<{
       }),
       onSubmit: (values) => {
         console.log({ values });
+        jobDetails.jobTitle= values?.jobTitle;
+        jobDetails.jobDetails= values?.jobDetails;
+        jobDetails.jobLocation= values?.jobLocation;
         handleTab(2);
       },
     });

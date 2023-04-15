@@ -7,10 +7,15 @@ import * as Yup from "yup";
 import { PageNumbers } from "../../interface/home";
 import { IRequisitionDetails } from "../../interface/forms";
 import { genderOptions, urgencyOptions } from "./constants";
+import { useData } from "./DataProvider";
 
 const RequisitionDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
-}> = ({ handleTab }) => {
+}> = ({ handleTab}) => {
+
+  const {state: {requisitionDetails}} = useData();
+
+
   const {
     handleChange,
     errors,
@@ -39,6 +44,10 @@ const RequisitionDetailsForm: React.FC<{
       gender: Yup.string().required("Gender is required"),
     }),
     onSubmit: (values) => {
+      requisitionDetails.requisitionTitle = values?.requisitionTitle;
+      requisitionDetails.noOfOpenings = values?.noOfOpenings;
+      requisitionDetails.urgency = values?.urgency;
+      requisitionDetails.gender = values?.gender;
       handleTab(1);
     },
   });

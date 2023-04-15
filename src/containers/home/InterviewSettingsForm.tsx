@@ -42,6 +42,9 @@ const InterviewDetailsForm: React.FC<{
     
     onSubmit: (values) => {
       console.log({ values });
+      interviewSettings.interviewMode=values?.interviewMode;
+      interviewSettings.interviewDuration=values?.interviewDuration;
+      interviewSettings.interviewLanguage=values?.interviewLanguage;
       alert("Form successfully submitted");
     },
   });
