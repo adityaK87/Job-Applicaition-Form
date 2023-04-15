@@ -11,7 +11,7 @@ const JobDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
   
-  const {state : {jobDetails}} = useData();
+  const dataContextValue = useData();
 
 
   const { handleChange, errors, touched, handleBlur, handleSubmit, values } =
@@ -30,9 +30,11 @@ const JobDetailsForm: React.FC<{
       }),
       onSubmit: (values) => {
         console.log({ values });
-        jobDetails.jobTitle= values?.jobTitle;
-        jobDetails.jobDetails= values?.jobDetails;
-        jobDetails.jobLocation= values?.jobLocation;
+        if(dataContextValue){
+          dataContextValue.state.jobDetails.jobTitle= values?.jobTitle;
+          dataContextValue.state.jobDetails.jobDetails= values?.jobDetails;
+          dataContextValue.state.jobDetails.jobLocation= values?.jobLocation;
+        }
         handleTab(2);
       },
     });

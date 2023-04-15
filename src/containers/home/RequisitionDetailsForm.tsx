@@ -13,7 +13,8 @@ const RequisitionDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab}) => {
 
-  const {state: {requisitionDetails}} = useData();
+  const dataContextValue = useData();
+
 
 
   const {
@@ -44,10 +45,12 @@ const RequisitionDetailsForm: React.FC<{
       gender: Yup.string().required("Gender is required"),
     }),
     onSubmit: (values) => {
-      requisitionDetails.requisitionTitle = values?.requisitionTitle;
-      requisitionDetails.noOfOpenings = values?.noOfOpenings;
-      requisitionDetails.urgency = values?.urgency;
-      requisitionDetails.gender = values?.gender;
+      if(dataContextValue){
+        dataContextValue.state.requisitionDetails.requisitionTitle = values.requisitionTitle;
+        dataContextValue.state.requisitionDetails.noOfOpenings = values.noOfOpenings;
+        dataContextValue.state.requisitionDetails.urgency = values.urgency;
+        dataContextValue.state.requisitionDetails.gender = values.gender;
+      }
       handleTab(1);
     },
   });

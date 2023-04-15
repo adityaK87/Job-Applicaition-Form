@@ -17,7 +17,7 @@ const InterviewDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
 
-  const {state: {interviewSettings}} = useData();
+  const dataContextValue = useData();
 
   const {
     errors,
@@ -42,9 +42,11 @@ const InterviewDetailsForm: React.FC<{
     
     onSubmit: (values) => {
       console.log({ values });
-      interviewSettings.interviewMode=values?.interviewMode;
-      interviewSettings.interviewDuration=values?.interviewDuration;
-      interviewSettings.interviewLanguage=values?.interviewLanguage;
+      if(dataContextValue){
+        dataContextValue.state.interviewSettings.interviewMode=values?.interviewMode;
+        dataContextValue.state.interviewSettings.interviewDuration=values?.interviewDuration;
+        dataContextValue.state.interviewSettings.interviewLanguage=values?.interviewLanguage;
+      }
       alert("Form successfully submitted");
     },
   });

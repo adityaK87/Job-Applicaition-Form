@@ -33,8 +33,8 @@ const HomeLayout = () => {
     setPage(pageNumber);
   };
 
-  const {state: {requisitionDetails, jobDetails, interviewSettings}} = useData();
-
+  const dataContextValue = useData();
+  
   return (
     <Box w="100%">
       <Container maxW="1200px">
@@ -60,9 +60,9 @@ const HomeLayout = () => {
               </TabPanel>
             </TabPanels>
             <DisplayCard 
-              requisitionDetails={requisitionDetails}
-              jobDetails={jobDetails}
-              interviewSettings={interviewSettings}
+              requisitionDetails={dataContextValue?.state?.requisitionDetails}
+              jobDetails={dataContextValue?.state?.jobDetails}
+              interviewSettings={dataContextValue?.state?.interviewSettings}
             />
           </Grid>
         </Tabs>
