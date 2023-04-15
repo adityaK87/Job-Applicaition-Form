@@ -5,10 +5,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { PageNumbers } from "../../interface/home";
 import { IJobDetails } from "../../interface/forms";
+import { useData } from "./DataProvider";
 
 const JobDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
 }> = ({ handleTab }) => {
+  
+  const {state : {jobDetails}} = useData();
+
+
   const { handleChange, errors, touched, handleBlur, handleSubmit, values } =
     useFormik<IJobDetails>({
       initialValues: {
@@ -20,7 +25,8 @@ const JobDetailsForm: React.FC<{
         jobTitle: Yup.string().required("Job Title is required"),
         jobDetails: Yup.string().required("Job Details is required"),
         jobLocation: Yup.string().required("Job Location is required"),
-        jobPosition: Yup.string().required("Job position is required"),
+        // jobPosition: Yup.string().required("Job position is required"), 
+        // SOLUTION - jobPosition is not available in IjobDetailsForm
       }),
       onSubmit: (values) => {
         console.log({ values });
